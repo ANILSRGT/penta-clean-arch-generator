@@ -1,0 +1,48 @@
+{
+  "name": "penta-clean-arch-generator--flutter-dart-",
+  "displayName": "Penta Clean Arch Generator (Flutter/Dart)",
+  "description": "Clean arch folders and files generate for flutter/dart",
+  "publisher": "Anıl Sorgit",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "penta-clean-arch-generator--flutter-dart-.cleanArch",
+      "title": "Generate Clean Arch"
+    },{
+      "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature",
+      "title": "Generate Clean Arch with Feature"
+    }],
+    "menus": {
+      "explorer/context": [{
+          "command": "penta-clean-arch-generator--flutter-dart-.cleanArch",
+          "group": "2_workspace@1"
+      },{
+          "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature",
+          "group": "2_workspace@2"
+      }]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.82.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "eslint": "^8.47.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.6",
+    "@vscode/test-electron": "^2.3.4"
+  }
+}
