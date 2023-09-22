@@ -3,18 +3,18 @@
 ## Description
 
 This is a context menu generator for flutter projects. It generates the following files:
-
-- Data Layer
-  - Data Sources
-  - Models
-  - Repositories
-- Domain Layer
-  - Entities
-  - Repositories
-  - Use Cases
-- Presentation Layer
-  - Pages
-  - Widgets
+- **\<FeatureName\> (With Feature)**
+  - Data Layer
+    - Data Sources
+    - Models
+    - Repositories
+  - Domain Layer
+    - Entities
+    - Repositories
+    - Use Cases
+  - Presentation Layer
+    - Pages (Only at App level)
+    - Widgets
 
 ## Usage
 
