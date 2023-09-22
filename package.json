@@ -3,14 +3,23 @@
   "displayName": "Penta Clean Arch Generator (Flutter/Dart)",
   "description": "Clean arch folders and files generate for flutter/dart",
   "publisher": "Anıl Sorgit",
+  "icon": "images/icon.png",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ANILSRGT/penta-clean-arch-generator"
+  },
+  "homepage": "https://github.com/ANILSRGT/penta-clean-arch-generator/blob/main/README.md",
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArch",
+    "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [{
