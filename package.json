@@ -17,26 +17,63 @@
     "Other"
   ],
   "activationEvents": [
+    "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArchEmpty",
+    "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArchWithFeatureEmpty",
     "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArch",
     "onCommand:penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature"
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "penta-clean-arch-generator--flutter-dart-.cleanArch",
-      "title": "Generate Clean Arch"
-    },{
-      "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature",
-      "title": "Generate Clean Arch with Feature"
-    }],
+    "commands": [
+      {
+        "command": "penta-clean-arch-generator--flutter-dart-.cleanArchEmpty",
+        "title": "Generate Clean Arch Empty"
+      },
+      {
+        "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeatureEmpty",
+        "title": "Generate Clean Arch with Feature Empty"
+      },
+      {
+        "command": "penta-clean-arch-generator--flutter-dart-.cleanArch",
+        "title": "Generate Clean Arch"
+      },
+      {
+        "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature",
+        "title": "Generate Clean Arch with Feature"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "penta_clean_arch.generator",
+        "label": "Penta Clean Arch",
+        "icon": "images/icon.png"
+      }
+    ],
     "menus": {
-      "explorer/context": [{
+      "explorer/context": [
+        {
+          "submenu": "penta_clean_arch.generator",
+          "group": "2_workspace"
+        }
+      ],
+      "penta_clean_arch.generator": [
+        {
+          "command": "penta-clean-arch-generator--flutter-dart-.cleanArchEmpty",
+          "group": "PentaCleanArch@1"
+        },
+        {
+          "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeatureEmpty",
+          "group": "PentaCleanArch@2"
+        },
+        {
           "command": "penta-clean-arch-generator--flutter-dart-.cleanArch",
-          "group": "2_workspace@1"
-      },{
+          "group": "PentaCleanArch@3"
+        },
+        {
           "command": "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature",
-          "group": "2_workspace@2"
-      }]
+          "group": "PentaCleanArch@4"
+        }
+      ]
     }
   },
   "scripts": {

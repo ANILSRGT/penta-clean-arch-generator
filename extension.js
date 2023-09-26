@@ -11,12 +11,21 @@ const fs = require("fs");
  */
 function activate(context) {
   console.log("Penta Clean Arch is now active!");
-  let disposable = vscode.commands.registerCommand("penta-clean-arch-generator--flutter-dart-.cleanArch", res =>
-    cleanArchGenerate(res.fsPath)
+  let disposable = vscode.commands.registerCommand("penta-clean-arch-generator--flutter-dart-.cleanArchEmpty", res =>
+    cleanArchGenerate(res, { isFeature: false, isEmpty: true })
+  );
+
+  disposable = vscode.commands.registerCommand(
+    "penta-clean-arch-generator--flutter-dart-.cleanArchWithFeatureEmpty",
+    res => cleanArchGenerate(res, { isFeature: true, isEmpty: true })
+  );
+
+  disposable = vscode.commands.registerCommand("penta-clean-arch-generator--flutter-dart-.cleanArch", res =>
+    cleanArchGenerate(res, { isFeature: false, isEmpty: false })
   );
 
   disposable = vscode.commands.registerCommand("penta-clean-arch-generator--flutter-dart-.cleanArchWithFeature", res =>
-    cleanArchGenerate(res.fsPath, true)
+    cleanArchGenerate(res, { isFeature: true, isEmpty: false })
   );
 
   context.subscriptions.push(disposable);
@@ -27,23 +36,42 @@ function deactivate() {
   console.log("Penta Clean Arch is now inactive!");
 }
 
-async function cleanArchGenerate(path, isFeature = false) {
-  const featureName = await vscode.window.showInputBox({
-    prompt: "Enter the name of the feature",
-    placeHolder: "Feature name",
-  });
+async function cleanArchGenerate(res, { isFeature = false, isEmpty = false }) {
+  vscode.window.showInformationMessage("Generating Clean Arch Files...");
+  var folderPath = res?.fsPath;
+  var featureName = undefined;
 
-  if (!featureName) {
-    vscode.window.showErrorMessage("You must enter a name");
-    return;
+  console.log(folderPath);
+
+  if (!folderPath) {
+    folderPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+
+    const pathInput = await vscode.window.showInputBox({
+      prompt: "Enter the path where you want to generate the files",
+      placeHolder: "Path (ex: lib) (OPTIONAL)",
+    });
+
+    if (pathInput) folderPath = path.join(folderPath, pathInput);
   }
 
-  createCleanArchFolders(path, featureName, isFeature);
+  if (!isEmpty || isFeature) {
+    featureName = await vscode.window.showInputBox({
+      prompt: "Enter the name of the feature",
+      placeHolder: "Feature name",
+    });
+
+    if (!featureName) {
+      vscode.window.showErrorMessage("You must enter a name");
+      return;
+    }
+  }
+
+  createCleanArchFolders(folderPath, isFeature, isEmpty, { featureName });
 
   vscode.window.showInformationMessage("Generated Clean Arch Files.");
 }
 
-function createCleanArchFolders(folderPath, featureName, isFeature) {
+function createCleanArchFolders(folderPath, isFeature, isEmpty, { featureName = undefined }) {
   folderPath = isFeature ? path.join(folderPath, featureName) : folderPath;
 
   const domainPath = path.join(folderPath, "domain");
@@ -78,16 +106,18 @@ function createCleanArchFolders(folderPath, featureName, isFeature) {
   paths.push(dataRepositoryPath);
   paths.push(dataDatasourceRemotePath);
   paths.push(dataDatasourceLocalPath);
-  if (!isFeature) paths.push(presentationPagePath);
+  paths.push(presentationPagePath);
   paths.push(presentationWidgetPath);
 
-  paths.push(path.join(domainEntityPath, `${featureName}_entity.dart`));
-  paths.push(path.join(domainRepositoryPath, `${featureName}_repository.dart`));
-  paths.push(path.join(dataDatasourceRemotePath, `${featureName}_remote_datasource.dart`));
-  paths.push(path.join(dataDatasourceLocalPath, `${featureName}_local_datasource.dart`));
-  paths.push(path.join(dataModelPath, `${featureName}_model.dart`));
-  paths.push(path.join(dataRepositoryPath, `${featureName}_repository_impl.dart`));
-  if (isFeature) paths.push(path.join(presentationPath, `${featureName}_view.dart`));
+  if (!isEmpty) {
+    paths.push(path.join(domainEntityPath, `${featureName}_entity.dart`));
+    paths.push(path.join(domainRepositoryPath, `${featureName}_repository.dart`));
+    paths.push(path.join(dataDatasourceRemotePath, `${featureName}_remote_datasource.dart`));
+    paths.push(path.join(dataDatasourceLocalPath, `${featureName}_local_datasource.dart`));
+    paths.push(path.join(dataModelPath, `${featureName}_model.dart`));
+    paths.push(path.join(dataRepositoryPath, `${featureName}_repository_impl.dart`));
+    if (isFeature) paths.push(path.join(presentationPagePath, `${featureName}_view.dart`));
+  }
 
   paths.forEach(element => {
     if (!fs.existsSync(element)) {

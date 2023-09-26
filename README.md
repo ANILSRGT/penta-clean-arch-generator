@@ -3,6 +3,7 @@
 ## Description
 
 This is a context menu generator for flutter projects. It generates the following files:
+
 - **\<FeatureName\> (With Feature)**
   - Data Layer
     - Data Sources
@@ -13,14 +14,13 @@ This is a context menu generator for flutter projects. It generates the followin
     - Repositories
     - Use Cases
   - Presentation Layer
-    - Pages (Only at App level)
+    - Pages
     - Widgets
 
 ## Usage
 
 1. Right click on the folder you want to generate the files in.
-2. Select `Generate Clean Arch` or `Generate Clean Arch with Feature` from the context menu.
-3. Enter the name of the feature you want to generate.
+2. Select an option from `Penta Clean Arch` in the context menu.
 
 ## Author
 
