@@ -1,4 +1,4 @@
-# Penta Clean Arch Generator (Flutter/Dart)
+# Penta Clean Arch Generator (Flutter/Dart) (v0.0.2)
 
 ## Description
 
